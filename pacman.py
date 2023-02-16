@@ -62,6 +62,15 @@ def is_a_wall(map, next_x, next_y):
     is_a_wall = map[next_x][next_y] == '|' or map[next_x][next_y] == '-'
     return is_a_wall
 
+def is_a_ghost(map, next_x, next_y):
+    return map[next_x][next_y] == 'G'
+
+def is_a_pill(map, next_x, next_y):
+    return map[next_x][next_y] == 'P'
+
+def is_pacman(map, next_x, next_y):
+    return map[next_x][next_y] == '@'
+
 def within_borders(map, next_x, next_y):
     number_of_rows = len(map)
     x_is_valid = 0 <= next_x < number_of_rows
@@ -128,8 +137,23 @@ def move_ghosts(map):
         next_ghost_x = possible_directions[random_number][0]
         next_ghost_y = possible_directions[random_number][1]
 
-        # move the ghost to the random position
- 
+        # chcks before actually moving it!
+        if not within_borders(map, next_ghost_x, next_ghost_y):
+            continue
+
+        if is_a_wall(map, next_ghost_x, next_ghost_y):
+            continue
+
+        if is_a_ghost(map, next_ghost_x, next_ghost_y):
+            continue
+
+        if is_a_pill(map, next_ghost_x, next_ghost_y):
+            continue
+
+        if is_pacman(map, next_ghost_x, next_ghost_y):
+            return True
+
+        # move the ghost to the random position 
         everything_to_the_left = map[ghost_x][0:ghost_y]
         everything_to_the_right = map[ghost_x][ghost_y + 1:]
         map[ghost_x] = everything_to_the_left + "." + everything_to_the_right
@@ -138,3 +162,5 @@ def move_ghosts(map):
         everything_to_the_left = map[next_ghost_x][0:next_ghost_y]
         everything_to_the_right = map[next_ghost_x][next_ghost_y + 1:]
         map[next_ghost_x] = everything_to_the_left + "G" + everything_to_the_right
+
+        return False

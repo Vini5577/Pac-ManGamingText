@@ -1,11 +1,65 @@
+ui_wall = [
+    "......",
+    "......",
+    "......",
+    "......"
+]
+
+ui_ghost = [
+    " .-.  ",
+    "| OO| ",
+    "|   | ",
+    "'^^^' "
+]
+
+ui_pacman = [
+    " .--. ",
+    "/ _.-'",
+    "\\  '-.",
+    " '--' "
+]
+
+ui_empty = [
+    "      ",
+    "      ",
+    "      ",
+    "      "
+]
+
+ui_pill = [
+    "      ",
+    " .-.  ",
+    " '-'  ",
+    "      "
+]
+
+def ui_intro():
+    print("="*30)
+    print("     PACMAN GAMING TEXT  ")
+    print("="*30)
+    print("")
+    print("")
+    print("presione s para continuar")
+
+
 def ui_print(map):
     for row in map:
-        for column in row:
-            print(column, end='')
+        for piece in range(4):
+            for column in row:
+                if column == 'G':
+                    print(ui_ghost[piece], end='')
+                if column == 'P':
+                    print(ui_pill[piece], end='')
+                if column == '@':
+                    print(ui_pacman[piece], end='')
+                if column == '.':
+                    print(ui_empty[piece], end='')
+                if column == '-' or column == '|':
+                    print(ui_wall[piece], end='')
 
-        print('')
+            print("")
 
-def ui_key():        
+def ui_key():
     return input()
 
 def ui_msg_lost():
